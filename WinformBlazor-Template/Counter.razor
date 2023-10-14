@@ -2,9 +2,35 @@
 
 <p>Current count: @currentCount</p>
 
+<p>@text</p>
+
 <button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
 
 @code {
+    [Parameter]
+    public SomeClass someClass { get; set; }
+
+    [Parameter]
+    public EventCallback callback { get; set; }
+
+    public string text = string.Empty;
+
+    protected override Task OnInitializedAsync()
+    {
+        // Subscribing to the event invoked by the back-end
+        someClass.OnSomeEvent += OnSomeEventHandler;
+
+        // Invoking callback from UI -> back-end
+        callback.InvokeAsync();
+
+        return base.OnInitializedAsync();
+    }
+
+    private void OnSomeEventHandler(object? sender, SomeEvent e)
+    {
+        text = e.message;
+    }
+
     private int currentCount = 0;
 
     private void IncrementCount()
