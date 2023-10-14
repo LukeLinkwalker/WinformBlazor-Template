@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.WebView.WindowsForms;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -11,6 +12,13 @@ namespace WinformBlazor_Template
 
             var services = new ServiceCollection();
             services.AddWindowsFormsBlazorWebView();
+
+#if (DEBUG)
+            // Show developer tools by pressing Ctrl + Shift + I
+            services.AddBlazorWebViewDeveloperTools();
+            services.AddLogging();
+#endif
+
             blazorWebView.HostPage = "wwwroot\\index.html";
             blazorWebView.Services = services.BuildServiceProvider();
             blazorWebView.RootComponents.Add<Counter>("#app");
