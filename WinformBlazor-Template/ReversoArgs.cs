@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace WinformBlazor_Template
 {
-    public class SomeEvent
+    public class ReversoArgs
     {
-        public string message { get; set; }
+        public string text { get; set; }
     }
 }

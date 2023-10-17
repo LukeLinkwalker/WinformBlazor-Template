@@ -19,18 +19,14 @@ namespace WinformBlazor_Template
             services.AddLogging();
 #endif
             // Used for demonstrating how the UI can subscribe to events invoked by the back-end.
-            var someClass = new SomeClass();
+            var reverso = new Reverso();
 
             blazorWebView.HostPage = "wwwroot\\index.html";
             blazorWebView.Services = services.BuildServiceProvider();            
-            blazorWebView.RootComponents.Add<Counter>("#app", 
+            blazorWebView.RootComponents.Add<ReversoView>("#app", 
                 new Dictionary<string, object?>() 
                 {
-                    { "someClass", someClass },
-                    { "callback", new EventCallback(null, () => {
-                        someClass.InvokeOnSomeEvent();
-                    })}
-                
+                    { "reverso", reverso }                
                 });
         }
     }

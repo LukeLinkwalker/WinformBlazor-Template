@@ -1,0 +1,35 @@
+﻿@using System.Diagnostics;
+<div class="fluid-container">
+    <div class="col-8 offset-2">
+        <div class="input-group">
+            <input class="vw-100 mb-3" type="text" placeholder="Input" @oninput="OnInput"/>
+            <input class="vw-100" type="text" disabled="true" @bind-value="reversedText"/>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public Reverso reverso { get; set; }
+
+    public string reversedText = string.Empty;
+
+    protected override Task OnInitializedAsync()
+    {
+        reverso.OnTextProcessed += HandleOnTextProcessed;
+        return base.OnInitializedAsync();
+    }
+
+    private void HandleOnTextProcessed(object? sender, ReversoArgs args)
+    {
+        reversedText = args.text;
+    }
+
+    private void OnInput(EventArgs args)
+    {
+        reverso.OnTextChanged.InvokeAsync(new ReversoArgs
+        {
+            text = (args as ChangeEventArgs).Value.ToString()
+        });
+    }
+}
